@@ -98,8 +98,12 @@ app.route('/users')
             }
         });
     })
+
+    // Updates all users
     .put((req, res)=> {
-        if (req.body.disabled) {
+        const ok = req.body.disabled.toLowerCase() === 'true' || req.body.disabled.toLowerCase() === 'false';
+        
+        if (ok) {
             const disabled = req.body.disabled.toLowerCase() === 'true' ? true : false
             User.updateMany({}, { $set: { disabled: disabled } },
                 function (err) {
@@ -118,7 +122,8 @@ app.route('/user/:username')
     
     // Updates a User
     .put((req, res) => {
-        if (req.body.disabled){
+        const ok = req.body.disabled.toLowerCase() === 'true' || req.body.disabled.toLowerCase() === 'false';
+        if (ok) {
         const disabled = req.body.disabled.toLowerCase() === 'true' ? true : false
         User.update(
             { username: req.params.username},
