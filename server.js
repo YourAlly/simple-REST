@@ -97,6 +97,21 @@ app.route('/users')
                 res.send(err);
             }
         });
+    })
+    .put((req, res)=> {
+        if (req.body.disabled) {
+            const disabled = req.body.disabled.toLowerCase() === 'true' ? true : false
+            User.updateMany({}, { $set: { disabled: disabled } },
+                function (err) {
+                    if (!err) {
+                        res.send("Successfully updated the Users");
+                    }
+                }
+            );
+        }
+        else {
+            res.send("Please provide a value for disabled")
+        }
     });
 
 app.route('/user/:username')
